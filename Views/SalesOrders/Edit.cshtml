@@ -1,0 +1,15 @@
+@model SalesOrderApp.Models.SalesOrder
+
+<h2>Edit Sales Order</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="OrderNo" class="control-label"></label>
+        <input asp-for="OrderNo" class="form-control" />
+        <span asp-validation-for="OrderNo" class="text-danger"></span>
+    </div>
+    <!-- Repeat for other fields -->
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

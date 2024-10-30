@@ -1,0 +1,43 @@
+@model IEnumerable<SalesOrderApp.Models.SalesOrder>
+
+@{
+    ViewData["Title"] = "Sales Orders";
+}
+
+<h2>Sales Orders</h2>
+
+<form method="get">
+    <input type="text" name="keyword" placeholder="Input Here" class="form-control" />
+    <input type="date" name="orderDate" class="form-control" />
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<a href="/SalesOrders/Create" class="btn btn-success">Add New Data</a>
+<a href="/SalesOrders/ExportToExcel" class="btn btn-info">Export To Excel</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Action</th>
+            <th>Sales Order</th>
+            <th>Order Date</th>
+            <th>Customer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SO_ORDER_ID</td>
+                <td>
+                    <a href="/SalesOrders/Edit/@item.SO_ORDER_ID" class="btn btn-primary">Edit</a>
+                    <a href="/SalesOrders/Delete/@item.SO_ORDER_ID" class="btn btn-danger">Delete</a>
+                </td>
+                <td>@item.ORDER_NO</td>
+                <td>@item.ORDER_DATE.ToShortDateString()</td>
+                <td>@item.COM_CUSTOMER_ID</td>
+            </tr>
+        }
+    </tbody>
+</table>
