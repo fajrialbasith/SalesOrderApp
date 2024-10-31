@@ -44,11 +44,5 @@ public class Startup
                 name: "default",
                 pattern: "{controller=SalesOrders}/{action=Index}/{id?}");
         });
-<<<<<<< HEAD
     }
-=======
-    }   
-
-
->>>>>>> origin/main
 }

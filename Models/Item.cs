@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-
-       
-
-        using System;
->>>>>>> origin/main
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

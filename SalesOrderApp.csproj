@@ -7,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <PackageReference Include="EPPlus" Version="5.8.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
-=======
-    <PackageReference Include="EPPlus" Version="4.0.1.1" />
->>>>>>> origin/main
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
   </ItemGroup>
 
