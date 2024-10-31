@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SalesOrderApp.Data;
 using SalesOrderApp.Models;
 using System;
@@ -23,16 +24,24 @@ namespace SalesOrderApp.Controllers
         {
             var salesOrders = from s in _context.SalesOrders
                               join c in _context.Customers on s.COM_CUSTOMER_ID equals c.COM_CUSTOMER_ID
-                              select new { s, c.CUSTOMER_NAME };
+                              select new SalesOrderViewModel
+                              {
+                                  SO_ORDER_ID = s.SO_ORDER_ID,
+                                  ORDER_NO = s.ORDER_NO,
+                                  ORDER_DATE = s.ORDER_DATE,
+                                  COM_CUSTOMER_ID = s.COM_CUSTOMER_ID,
+                                  ADDRESS = s.ADDRESS,
+                                  CUSTOMER_NAME = c.CUSTOMER_NAME
+                              };
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                salesOrders = salesOrders.Where(s => s.s.ORDER_NO.Contains(keyword) || s.CUSTOMER_NAME.Contains(keyword));
+                salesOrders = salesOrders.Where(s => s.ORDER_NO.Contains(keyword) || s.CUSTOMER_NAME.Contains(keyword));
             }
 
             if (orderDate.HasValue)
             {
-                salesOrders = salesOrders.Where(s => s.s.ORDER_DATE == orderDate.Value);
+                salesOrders = salesOrders.Where(s => s.ORDER_DATE == orderDate.Value);
             }
 
             return View(await salesOrders.ToListAsync());
@@ -40,7 +49,19 @@ namespace SalesOrderApp.Controllers
 
         public IActionResult ExportToExcel()
         {
-            var salesOrders = _context.SalesOrders.ToList();
+            var salesOrders = _context.SalesOrders
+                                      .Include(s => s.Customer)
+                                      .Select(s => new SalesOrderViewModel
+                                      {
+                                          SO_ORDER_ID = s.SO_ORDER_ID,
+                                          ORDER_NO = s.ORDER_NO,
+                                          ORDER_DATE = s.ORDER_DATE,
+                                          COM_CUSTOMER_ID = s.COM_CUSTOMER_ID,
+                                          ADDRESS = s.ADDRESS,
+                                          CUSTOMER_NAME = s.Customer.CUSTOMER_NAME
+                                      })
+                                      .ToList();
+
             var stream = new MemoryStream();
 
             using (var package = new ExcelPackage(stream))
@@ -54,11 +75,15 @@ namespace SalesOrderApp.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
-        public IActionResult Create()
+            public IActionResult Create()
         {
-            ViewBag.Customers = _context.Customers.ToList();
+            ViewBag.Customers = new SelectList(new[] { 
+                new { COM_CUSTOMER_ID = 1, CUSTOMER_NAME = "TestCustomer1" }, 
+                new { COM_CUSTOMER_ID = 2, CUSTOMER_NAME = "TestCustomer2" } 
+            }, "COM_CUSTOMER_ID", "CUSTOMER_NAME");
             return View();
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -70,12 +95,10 @@ namespace SalesOrderApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Customers = _context.Customers.ToList();
+            ViewBag.Customers = new SelectList(new[] { "TestCustomer1", "TestCustomer2" });
             return View(salesOrder);
         }
 
-
-        // GET: SalesOrders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,7 +114,6 @@ namespace SalesOrderApp.Controllers
             return View(salesOrder);
         }
 
-        // POST: SalesOrders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SO_ORDER_ID,ORDER_NO,ORDER_DATE,COM_CUSTOMER_ID,ADDRESS")] SalesOrder salesOrder)
@@ -129,7 +151,6 @@ namespace SalesOrderApp.Controllers
             return _context.SalesOrders.Any(e => e.SO_ORDER_ID == id);
         }
 
-        // GET: SalesOrders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,16 +168,17 @@ namespace SalesOrderApp.Controllers
             return View(salesOrder);
         }
 
-        // POST: SalesOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var salesOrder = await _context.SalesOrders.FindAsync(id);
-            _context.SalesOrders.Remove(salesOrder);
-            await _context.SaveChangesAsync();
+            if (salesOrder != null)
+            {
+                _context.SalesOrders.Remove(salesOrder);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

@@ -13,5 +13,7 @@ namespace SalesOrderApp.Models
         public DateTime ORDER_DATE { get; set; }
         public int COM_CUSTOMER_ID { get; set; }
         public string ADDRESS { get; set; }
+        [ForeignKey("COM_CUSTOMER_ID")]
+        public Customer Customer { get; set; }  // Establish relationship with Customer
     }
 }

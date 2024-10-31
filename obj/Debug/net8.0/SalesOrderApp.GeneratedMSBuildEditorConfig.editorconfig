@@ -9,27 +9,31 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SalesOrderApp
 build_property.RootNamespace = SalesOrderApp
-build_property.ProjectDir = /Users/macbookpro/Desktop/Test/SalesOrderApp/
+build_property.ProjectDir = /Users/macbookpro/Desktop/SalesOrderApp/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/macbookpro/Desktop/Test/SalesOrderApp
+build_property.MSBuildProjectDirectory = /Users/macbookpro/Desktop/SalesOrderApp
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/macbookpro/Desktop/Test/SalesOrderApp/Views/SalesOrders/Create.cshtml]
+[/Users/macbookpro/Desktop/SalesOrderApp/Views/SalesOrders/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2FsZXNPcmRlcnMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/macbookpro/Desktop/Test/SalesOrderApp/Views/SalesOrders/Delete.cshtml]
+[/Users/macbookpro/Desktop/SalesOrderApp/Views/SalesOrders/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2FsZXNPcmRlcnMvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/macbookpro/Desktop/Test/SalesOrderApp/Views/SalesOrders/Edit.cshtml]
+[/Users/macbookpro/Desktop/SalesOrderApp/Views/SalesOrders/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2FsZXNPcmRlcnMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/macbookpro/Desktop/Test/SalesOrderApp/Views/SalesOrders/Index.cshtml]
+[/Users/macbookpro/Desktop/SalesOrderApp/Views/SalesOrders/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2FsZXNPcmRlcnMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/macbookpro/Desktop/SalesOrderApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

@@ -4,76 +4,100 @@
     ViewData["Title"] = "Create Sales Order";
 }
 
-<h2>Create Sales Order</h2>
+<div class="container mt-4">
+    <h2>Create Sales Order</h2>
+    <form asp-action="Create">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="ORDER_NO" class="control-label">Sales Order Number</label>
+                <input asp-for="ORDER_NO" class="form-control" />
+                <span asp-validation-for="ORDER_NO" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="ORDER_DATE" class="control-label">Order Date</label>
+                <input asp-for="ORDER_DATE" class="form-control" type="date" />
+                <span asp-validation-for="ORDER_DATE" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="COM_CUSTOMER_ID" class="control-label">Customer</label>
+                <select asp-for="COM_CUSTOMER_ID" class="form-control" asp-items="ViewBag.Customers"></select>
+                <span asp-validation-for="COM_CUSTOMER_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="ADDRESS" class="control-label">Address</label>
+                <input asp-for="ADDRESS" class="form-control" />
+                <span asp-validation-for="ADDRESS" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <h3>Items</h3>
+        <div id="itemList">
+            <table class="table table-bordered table-striped" id="itemsTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Item rows will go here -->
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success mb-3" id="addItemBtn">Add Item</button>
+        </div>
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="ORDER_NO" class="control-label"></label>
-        <input asp-for="ORDER_NO" class="form-control" />
-        <span asp-validation-for="ORDER_NO" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ORDER_DATE" class="control-label"></label>
-        <input asp-for="ORDER_DATE" class="form-control" type="date" />
-        <span asp-validation-for="ORDER_DATE" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="COM_CUSTOMER_ID" class="control-label"></label>
-        <select asp-for="COM_CUSTOMER_ID" class="form-control" asp-items="@(new SelectList(ViewBag.Customers, "COM_CUSTOMER_ID", "CUSTOMER_NAME"))"></select>
-        <span asp-validation-for="COM_CUSTOMER_ID" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ADDRESS" class="control-label"></label>
-        <input asp-for="ADDRESS" class="form-control" />
-        <span asp-validation-for="ADDRESS" class="text-danger"></span>
-    </div>
-    
-    <h3>Items</h3>
-    <div id="itemList">
-        <table class="table" id="itemsTable">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Item rows will go here -->
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-success" id="addItemBtn">Add Item</button>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Close</a>
-</form>
+        <div class="summary">
+            <p>Total items: <span id="totalItems">0</span></p>
+            <p>Total amount: <span id="totalAmount">0</span></p>
+        </div>
 
-@section Scripts {
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "SalesOrders")'">Close</button>
+    </form>
+
     <script>
+        let totalItems = 0;
+        let totalAmount = 0;
+
         document.getElementById('addItemBtn').addEventListener('click', function () {
             let table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
             let row = table.insertRow();
+            let index = table.rows.length;
             row.innerHTML = `
+                <td>${index}</td>
                 <td><input type="text" class="form-control" name="ItemName" /></td>
                 <td><input type="number" class="form-control" name="Quantity" /></td>
                 <td><input type="number" class="form-control" name="Price" step="0.01" /></td>
+                <td class="total">0.00</td>
                 <td>
-                    <button type="button" class="btn btn-primary saveItemBtn">Save</button>
-                    <button type="button" class="btn btn-danger cancelItemBtn">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary saveItemBtn">Save</button>
+                    <button type="button" class="btn btn-sm btn-danger cancelItemBtn">Cancel</button>
                 </td>
             `;
-            
-            // Save item data
+
             row.querySelector('.saveItemBtn').addEventListener('click', function () {
-                // Save logic here
+                let qty = row.querySelector('[name="Quantity"]').value;
+                let price = row.querySelector('[name="Price"]').value;
+                row.querySelector('.total').innerText = (qty * price).toFixed(2);
+
+                totalItems += parseInt(qty);
+                totalAmount += qty * price;
+
+                document.getElementById('totalItems').innerText = totalItems;
+                document.getElementById('totalAmount').innerText = totalAmount.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+
+                this.disabled = true;
             });
-            
-            // Cancel item edit
+
             row.querySelector('.cancelItemBtn').addEventListener('click', function () {
                 table.deleteRow(row.rowIndex - 1);
             });
         });
     </script>
-}
+</div>

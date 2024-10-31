@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/macbookpro/Desktop/Test/SalesOrderApp/SalesOrderApp.csproj": {}
+    "/Users/macbookpro/Desktop/SalesOrderApp/SalesOrderApp.csproj": {}
   },
   "projects": {
-    "/Users/macbookpro/Desktop/Test/SalesOrderApp/SalesOrderApp.csproj": {
+    "/Users/macbookpro/Desktop/SalesOrderApp/SalesOrderApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/macbookpro/Desktop/Test/SalesOrderApp/SalesOrderApp.csproj",
+        "projectUniqueName": "/Users/macbookpro/Desktop/SalesOrderApp/SalesOrderApp.csproj",
         "projectName": "SalesOrderApp",
-        "projectPath": "/Users/macbookpro/Desktop/Test/SalesOrderApp/SalesOrderApp.csproj",
+        "projectPath": "/Users/macbookpro/Desktop/SalesOrderApp/SalesOrderApp.csproj",
         "packagesPath": "/Users/macbookpro/.nuget/packages/",
-        "outputPath": "/Users/macbookpro/Desktop/Test/SalesOrderApp/obj/",
+        "outputPath": "/Users/macbookpro/Desktop/SalesOrderApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/macbookpro/.nuget/NuGet/NuGet.Config"
@@ -45,7 +45,11 @@
           "dependencies": {
             "EPPlus": {
               "target": "Package",
-              "version": "[4.0.1.1, )"
+              "version": "[5.8.4, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
