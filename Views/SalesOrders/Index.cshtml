@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @model IEnumerable<SalesOrderApp.Models.SalesOrderViewModel>
+=======
+@model IEnumerable<SalesOrderApp.Models.SalesOrder>
+>>>>>>> origin/main
 
 @{
     ViewData["Title"] = "Sales Orders";
@@ -7,6 +11,7 @@
 <h2>Sales Orders</h2>
 
 <form method="get">
+<<<<<<< HEAD
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="keyword">Keywords</label>
@@ -17,6 +22,10 @@
             <input type="date" name="orderDate" class="form-control" />
         </div>
     </div>
+=======
+    <input type="text" name="keyword" placeholder="Input Here" class="form-control" />
+    <input type="date" name="orderDate" class="form-control" />
+>>>>>>> origin/main
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
@@ -44,7 +53,11 @@
                 </td>
                 <td>@item.ORDER_NO</td>
                 <td>@item.ORDER_DATE.ToShortDateString()</td>
+<<<<<<< HEAD
                 <td>@item.CUSTOMER_NAME</td>
+=======
+                <td>@item.COM_CUSTOMER_ID</td>
+>>>>>>> origin/main
             </tr>
         }
     </tbody>

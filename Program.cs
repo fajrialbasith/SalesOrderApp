@@ -16,7 +16,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

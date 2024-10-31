@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc.Rendering;
+=======
+>>>>>>> origin/main
 using SalesOrderApp.Data;
 using SalesOrderApp.Models;
 using System;
@@ -24,6 +27,7 @@ namespace SalesOrderApp.Controllers
         {
             var salesOrders = from s in _context.SalesOrders
                               join c in _context.Customers on s.COM_CUSTOMER_ID equals c.COM_CUSTOMER_ID
+<<<<<<< HEAD
                               select new SalesOrderViewModel
                               {
                                   SO_ORDER_ID = s.SO_ORDER_ID,
@@ -37,11 +41,22 @@ namespace SalesOrderApp.Controllers
             if (!string.IsNullOrEmpty(keyword))
             {
                 salesOrders = salesOrders.Where(s => s.ORDER_NO.Contains(keyword) || s.CUSTOMER_NAME.Contains(keyword));
+=======
+                              select new { s, c.CUSTOMER_NAME };
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                salesOrders = salesOrders.Where(s => s.s.ORDER_NO.Contains(keyword) || s.CUSTOMER_NAME.Contains(keyword));
+>>>>>>> origin/main
             }
 
             if (orderDate.HasValue)
             {
+<<<<<<< HEAD
                 salesOrders = salesOrders.Where(s => s.ORDER_DATE == orderDate.Value);
+=======
+                salesOrders = salesOrders.Where(s => s.s.ORDER_DATE == orderDate.Value);
+>>>>>>> origin/main
             }
 
             return View(await salesOrders.ToListAsync());
@@ -49,6 +64,7 @@ namespace SalesOrderApp.Controllers
 
         public IActionResult ExportToExcel()
         {
+<<<<<<< HEAD
             var salesOrders = _context.SalesOrders
                                       .Include(s => s.Customer)
                                       .Select(s => new SalesOrderViewModel
@@ -62,6 +78,9 @@ namespace SalesOrderApp.Controllers
                                       })
                                       .ToList();
 
+=======
+            var salesOrders = _context.SalesOrders.ToList();
+>>>>>>> origin/main
             var stream = new MemoryStream();
 
             using (var package = new ExcelPackage(stream))
@@ -75,6 +94,7 @@ namespace SalesOrderApp.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
+<<<<<<< HEAD
             public IActionResult Create()
         {
             ViewBag.Customers = new SelectList(new[] { 
@@ -85,6 +105,14 @@ namespace SalesOrderApp.Controllers
         }
 
 
+=======
+        public IActionResult Create()
+        {
+            ViewBag.Customers = _context.Customers.ToList();
+            return View();
+        }
+
+>>>>>>> origin/main
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SO_ORDER_ID,ORDER_NO,ORDER_DATE,COM_CUSTOMER_ID,ADDRESS")] SalesOrder salesOrder)
@@ -95,10 +123,19 @@ namespace SalesOrderApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+<<<<<<< HEAD
             ViewBag.Customers = new SelectList(new[] { "TestCustomer1", "TestCustomer2" });
             return View(salesOrder);
         }
 
+=======
+            ViewBag.Customers = _context.Customers.ToList();
+            return View(salesOrder);
+        }
+
+
+        // GET: SalesOrders/Edit/5
+>>>>>>> origin/main
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,6 +151,10 @@ namespace SalesOrderApp.Controllers
             return View(salesOrder);
         }
 
+<<<<<<< HEAD
+=======
+        // POST: SalesOrders/Edit/5
+>>>>>>> origin/main
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SO_ORDER_ID,ORDER_NO,ORDER_DATE,COM_CUSTOMER_ID,ADDRESS")] SalesOrder salesOrder)
@@ -151,6 +192,10 @@ namespace SalesOrderApp.Controllers
             return _context.SalesOrders.Any(e => e.SO_ORDER_ID == id);
         }
 
+<<<<<<< HEAD
+=======
+        // GET: SalesOrders/Delete/5
+>>>>>>> origin/main
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,11 +213,16 @@ namespace SalesOrderApp.Controllers
             return View(salesOrder);
         }
 
+<<<<<<< HEAD
+=======
+        // POST: SalesOrders/Delete/5
+>>>>>>> origin/main
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var salesOrder = await _context.SalesOrders.FindAsync(id);
+<<<<<<< HEAD
             if (salesOrder != null)
             {
                 _context.SalesOrders.Remove(salesOrder);
@@ -182,3 +232,12 @@ namespace SalesOrderApp.Controllers
         }
     }
 }
+=======
+            _context.SalesOrders.Remove(salesOrder);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+    }
+}
+>>>>>>> origin/main
